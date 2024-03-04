@@ -5,16 +5,14 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
+    "scheme": "qr-application-mobile",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
@@ -25,12 +23,21 @@
       }
     },
     "web": {
-      "bundler": "metro",
-      "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/favicon.png",
+      "bundler": "metro"
     },
     "plugins": [
-      "expo-router"
+      ["expo-font", {
+        "fonts": [
+          "./assets/fonts/Quicksand-Bold.ttf",
+          "./assets/fonts/Quicksand-Medium.ttf",
+          "./assets/fonts/Quicksand-Regular.ttf"
+        ]
+      }],
+      ["expo-barcode-scanner", {
+        "cameraPermission": "Allow $(PRODUCT_NAME) to access camera."
+      }],
+      ["expo-router"]
     ],
     "experiments": {
       "typedRoutes": true
