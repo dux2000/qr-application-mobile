@@ -4,13 +4,18 @@ import {SafeAreaView, StyleSheet, TextInput, TouchableOpacity, View, Text} from 
 import api from "@/service/api";
 
 const Login = () => {
-    api.clothes.getClothesById(3)
-        .then((data) => console.log(data))
-        .catch((e) => console.log(e))
     const router = useRouter();
     const [username, setUsername] = useState<string>("")
     const [password, setPassword] = useState<string>("")
-
+    const [errorMessage, setErrorMessage] = useState<string>("")
+    const handleLogin = () => {
+        api.user.loginUser(username, password)
+            .then((data) => {
+                setErrorMessage("")
+                router.replace("/scanner")
+            })
+            .catch((e) => setErrorMessage("Wrong username or password."))
+    }
   return (
       <SafeAreaView>
           <Stack.Screen options={{headerTitle: "", headerShadowVisible: false, headerStyle: { backgroundColor: "#FAFAFC"}}} />
@@ -33,12 +38,13 @@ const Login = () => {
                           placeholder='Password'
                       />
                   </View>
-                  <Link href={"/scanner"} asChild replace>
-                      <TouchableOpacity
-                          style={styles.loginButton}>
-                          <Text style={styles.text}>Log in</Text>
-                      </TouchableOpacity>
-                  </Link>
+                  {errorMessage && <Text>{errorMessage}</Text>}
+                  <TouchableOpacity
+                      style={styles.loginButton}
+                      onPress={() => handleLogin()}
+                  >
+                      <Text style={styles.text}>Log in</Text>
+                  </TouchableOpacity>
               </View>
           </View>
       </SafeAreaView>

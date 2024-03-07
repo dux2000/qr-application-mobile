@@ -8,7 +8,7 @@ import { MaterialIcons, Ionicons, MaterialCommunityIcons   } from '@expo/vector-
 import TextHolder from "@/components/common/TextHolder";
 import {COLORS} from "@/constants/theme";
 import TouchableTextHolder from "@/components/common/TouchableTextHolder";
-import {set} from "yaml/dist/schema/yaml-1.1/set";
+
 
 const Clothes = () => {
     const params = useLocalSearchParams()
@@ -80,6 +80,11 @@ const Clothes = () => {
                 </View>
                 : error ? <Text>error</Text>
                     : <View style={styles.clothesContainer}>
+                        <TextHolder
+                            icon={<Ionicons name="shirt" size={30} color={COLORS.primary} />}
+                            title={"Name"}
+                            description={data?.name}
+                        />
                         <TextHolder
                             icon={<MaterialIcons name="color-lens" size={30} color={COLORS.primary} />}
                             title={"Boja"}

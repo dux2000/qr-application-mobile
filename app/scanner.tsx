@@ -9,27 +9,28 @@ import {COLORS} from "@/constants/theme";
 
 const ScannerPage: React.FC = () => {
     const [hasPermission, setHasPermission] = useState<boolean>(false)
-    const [open, setOpen] = useState<boolean>(true)
+    const [showCamera, setShowCamera] = useState<boolean>(true);
 
-    const handleModalOpen = (value : boolean) => {
-        setOpen(value);
-    }
     const getCameraPermissions = async () => {
         const { status } = await Camera.requestCameraPermissionsAsync();
         setHasPermission(status === "granted");
     };
+
     useEffect(() => {
+        console.log("mounted")
         getCameraPermissions();
+        return () => {
+            console.log("unmounted")
+            setShowCamera(false);
+        };
     }, []);
 
-    console.log(hasPermission);
+
     const router = useRouter()
 
     const handleBarCodeScanner = (event : any) => {
-        setHasPermission(false);
         const data = JSON.parse(event.data);
         router.push(`/clothes/${data.id}`)
-        setTimeout(() => setHasPermission(true), 1000)
     }
 
     return (
@@ -47,7 +48,7 @@ const ScannerPage: React.FC = () => {
                 alignItems: "center",
                 backgroundColor: COLORS.lightWhite,
             }}>
-                <BarCodeScanner handleBarCodeScanned={handleBarCodeScanner} canScan={hasPermission}/>
+                {showCamera && <BarCodeScanner handleBarCodeScanned={handleBarCodeScanner} canScan={hasPermission} />}
             </View>
         </SafeAreaView>
     );
