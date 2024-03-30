@@ -30,7 +30,7 @@ const ScannerPage: React.FC = () => {
 
     const handleBarCodeScanner = (event : any) => {
         const data = JSON.parse(event.data);
-        router.push(`/clothes/${data.id}`)
+        router.push(`/products/${data.id}`)
     }
 
     return (

@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../qr-application-desktop/.idea/qr-application-desktop.iml" filepath="$PROJECT_DIR$/../qr-application-desktop/.idea/qr-application-desktop.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/qr-application-mobile.iml" filepath="$PROJECT_DIR$/.idea/qr-application-mobile.iml" />
     </modules>
   </component>

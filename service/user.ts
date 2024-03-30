@@ -4,6 +4,7 @@ import {UserDto} from "@/interface/Interfaces";
 const user = {
     async loginUser(username: string, password: string) : Promise<UserDto> {
         const url = "users/login"
+        console.log(username, password)
 
         return api_endpoint.post(url, {
             username: username,
@@ -13,6 +14,7 @@ const user = {
                 return response.data
             })
             .catch((error) => {
+                console.log(error)
                 throw error;
             })
     }

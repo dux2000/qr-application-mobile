@@ -1,7 +1,8 @@
 import React from 'react';
 import {Stack} from 'expo-router'
 import {useFonts} from "expo-font";
-
+import {Provider} from "react-redux";
+import {store} from "@/store/store";
 const Layout = () => {
     const [fontsLoaded] = useFonts({
         QSBold: require("../assets/fonts/Quicksand-Bold.ttf"),
@@ -14,9 +15,11 @@ const Layout = () => {
     }
 
     return (
-        <Stack>
-            <Stack.Screen name="index" options={{title: "login"}}/>
-        </Stack>
+        <Provider store={store}>
+            <Stack>
+                <Stack.Screen name="index" options={{title: "login"}}/>
+            </Stack>
+        </Provider>
     );
 };
 

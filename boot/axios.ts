@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from "axios";
 
 // /api/v1 for development, http://tesla:9089/price-list/api/v1/ for production
-const api_url = "http://192.168.100.3:8084/api/v1/";
+const api_url = "http:/192.168.100.3:8084/api/v1/";
 // const api_url = "http://tesla:9089/price-list/api/v1/";
 // const api_url = "http://10.145.30.70:8090/price-list/api/v1/";
 

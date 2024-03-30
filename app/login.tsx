@@ -2,19 +2,23 @@ import {Link, Stack, useRouter} from "expo-router";
 import React, {useState} from "react";
 import {SafeAreaView, StyleSheet, TextInput, TouchableOpacity, View, Text} from "react-native";
 import api from "@/service/api";
+import {useDispatch, useSelector} from "react-redux";
 
 const Login = () => {
     const router = useRouter();
     const [username, setUsername] = useState<string>("")
     const [password, setPassword] = useState<string>("")
     const [errorMessage, setErrorMessage] = useState<string>("")
+    const dispatch = useDispatch()
+
     const handleLogin = () => {
         api.user.loginUser(username, password)
             .then((data) => {
+                dispatch({type: "user/login", payload: data})
                 setErrorMessage("")
                 router.replace("/scanner")
             })
-            .catch((e) => setErrorMessage("Wrong username or password."))
+            .catch((e) => {console.log(e); setErrorMessage("Wrong username or password.")})
     }
   return (
       <SafeAreaView>
