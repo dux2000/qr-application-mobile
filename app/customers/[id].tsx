@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Text, View, StyleSheet, Button } from "react-native";
-import { CameraView, Camera } from "expo-camera/next";
+import { CameraView, Camera } from "expo-camera";
 
 export default function QRScanner({handleBarCodeScanned} : {handleBarCodeScanned : Function}) {
   const [hasPermission, setHasPermission] = useState<boolean>(false);

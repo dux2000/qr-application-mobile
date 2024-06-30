@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 import { Link, Stack, useRouter } from 'expo-router';
 import BarCodeScanner from "@/components/common/BarCodeScanner";
-import {Camera} from "expo-camera/next";
+import {Camera} from "expo-camera";
 import api from "@/service/api";
 import CustomModal from "@/components/common/CustomModal";
 import {COLORS} from "@/constants/theme";

@@ -23,6 +23,13 @@ export interface ContactDto {
 export interface StatusDto {
     code: string;
     description: string;
+    name: string;
+    transitions: StatusTransitionsDto[]
+}
+
+export interface StatusTransitionsDto {
+    code: string,
+    name: string
 }
 
 export interface UserDto {

@@ -3,6 +3,7 @@ import React, {useState} from "react";
 import {SafeAreaView, StyleSheet, TextInput, TouchableOpacity, View, Text} from "react-native";
 import api from "@/service/api";
 import {useDispatch, useSelector} from "react-redux";
+import {COLORS} from "@/constants/theme";
 
 const Login = () => {
     const router = useRouter();
@@ -38,6 +39,7 @@ const Login = () => {
                       <TextInput
                           style={styles.searchInput}
                           value={password}
+                          secureTextEntry={true}
                           onChangeText={(e : string) => setPassword(e)}
                           placeholder='Password'
                       />
@@ -72,9 +74,9 @@ const styles = StyleSheet.create({
     searchWrapper : {
         width: "100%",
         backgroundColor: 'white',
-        borderRadius: 10,
-        borderColor: "#255227",
-        borderWidth: 1,
+        borderRadius: 20,
+        borderColor: COLORS.primary,
+        borderWidth: 2,
         justifyContent: "center",
         alignItems: "center",
     },
@@ -89,7 +91,7 @@ const styles = StyleSheet.create({
         width: "80%",
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "#255227",
+        backgroundColor: COLORS.primary,
         borderRadius: 25
     },
     text: {

@@ -9,15 +9,15 @@ import TextHolder from "@/components/common/TextHolder";
 import {COLORS} from "@/constants/theme";
 import TouchableTextHolder from "@/components/common/TouchableTextHolder";
 import {useSelector} from "react-redux";
-
-
+import { FontAwesome5 } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 const Product = () => {
     const user = useSelector((state: any) => state.user)
     const {id} = useLocalSearchParams<{ id: string }>()
     const [data ,setData] = useState<ProductDto>()
     const [isLoading, setIsLoading] = useState<boolean>(true)
     const [error, setError] = useState<any>()
-    const [statusTransitions, setStatusTransitions] = useState<[StatusDto][]>([[{code: "TAKEN", description: "Radnik preuzeo proizvod"}], [{code: "DONE", description: "Radnik završio"}]]);
+    const [statusTransitions, setStatusTransitions] = useState<StatusDto[]>();
     const [apiCarrier, setApiCarrier] = useState<SearchRequest>({
         page: 0, size: 1,
         searchFilter: {
@@ -35,20 +35,41 @@ const Product = () => {
 
         api.products.getProducts(apiCarrier)
             .then((response) => {
-                setData(response.data[0]);
+                const productData = response.data[0];
+                setData(productData);
+
+                // Check if productData is available before accessing its properties
+                if (productData && productData.status && productData.status.code) {
+                    //fetchStatusTransitions(productData.status);
+                } else {
+                    setError("Product data or its status code is unavailable.");
+                    setIsLoading(false);
+                }
+            })
+            .catch((e) => {
+                setError(e);
+                setIsLoading(false);
+            });
+    }, [id, apiCarrier]);
+
+    const fetchStatusTransitions = (status: StatusDto) => {
+        setIsLoading(true)
+        api.status.getStatusTransitions(status.code)
+            .then((response) => {
+                setStatusTransitions(response);
                 setIsLoading(false);
             })
             .catch((e) => {
                 setError(e);
-                setIsLoading(false); // Set loading to false even on error
+                setIsLoading(false);
             });
-    }, []);
-
+    }
     const handleTouch = (nextStatus: string) => {
         setIsLoading(true)
-        api.products.updateProduct(id, user.id, nextStatus)
+        api.products.updateProduct(id!, user.id, nextStatus)
             .then((data) => {
                 setData(data);
+                fetchStatusTransitions(data.status);
                 setIsLoading(false);
             })
             .catch((e) => {
@@ -74,28 +95,30 @@ const Product = () => {
                 : error ? <Text>error</Text>
                     : <View style={styles.clothesContainer}>
                         <TextHolder
-                            icon={<Ionicons name="shirt" size={30} color={COLORS.primary} />}
+                            icon={<FontAwesome5 name="pen" size={22} color={COLORS.primary} />}
                             title={"Name"}
                             description={data?.name}
                         />
-                        {user.id === data?.currentUser.id && data?.status.code === "TAKEN" ?
-                            <TouchableTextHolder
-                                icon={<MaterialCommunityIcons name="check" size={30} color={COLORS.primary} />}
-                                title={"Finish product"}
-                                description={"Finish the product"}
-                                handleTouch={handleTouch}
-                                statusTransitions={statusTransitions[1]}
+                        <TextHolder
+                            icon={<MaterialIcons name="description" size={30} color={COLORS.primary} />}
+                            title={"Description"}
+                            description={data?.description}
+                        />
+                        {data?.characteristics.map((characteristic, index) =>
+                            <TextHolder
+                                key={index}
+                                icon={<FontAwesome5 name="info" size={22} color={COLORS.primary} />}
+                                title={characteristic.code + "- " + characteristic.globalCode}
+                                description={characteristic.value}
                             />
-                            : user.id === data?.currentUser.id && data?.status.code === "DONE"
-                                ? <Text>Product is finished</Text>
-                                : <TouchableTextHolder
-                                        icon={<MaterialCommunityIcons name="list-status" size={30} color={COLORS.primary} />}
-                                        title={"Status"}
-                                        description={data?.status.description}
-                                        handleTouch={handleTouch}
-                                        statusTransitions={statusTransitions[0]}
-                                    />
-                        }
+                        )}
+                        {/*<TouchableTextHolder
+                            icon={<MaterialCommunityIcons name="check" size={30} color={COLORS.primary} />}
+                            title={"Current status"}
+                            description={data?.status.description}
+                            handleTouch={handleTouch}
+                            statusTransitions={statusTransitions}
+                        />*/}
                     </View>
             }
         </SafeAreaView>

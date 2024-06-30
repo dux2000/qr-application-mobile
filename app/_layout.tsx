@@ -17,7 +17,7 @@ const Layout = () => {
     return (
         <Provider store={store}>
             <Stack>
-                <Stack.Screen name="index" options={{title: "login"}}/>
+                <Stack.Screen name="index" options={{title: "Worker application"}}/>
             </Stack>
         </Provider>
     );

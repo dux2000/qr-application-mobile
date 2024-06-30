@@ -1,4 +1,4 @@
-import {CameraView} from "expo-camera/next";
+import {CameraView} from "expo-camera";
 import React from "react";
 import {StyleSheet, View} from "react-native";
 

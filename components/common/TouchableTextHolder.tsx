@@ -5,7 +5,7 @@ import {StatusDto} from "@/interface/Interfaces";
 
 interface TouchableTextHolderProps {
     icon: ReactNode,
-    title: string,
+    title?: string,
     description?: string,
     handleTouch: Function,
     statusTransitions: StatusDto[] | undefined
